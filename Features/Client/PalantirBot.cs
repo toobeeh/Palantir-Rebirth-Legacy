@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Palantir_Rebirth
+namespace Palantir_Rebirth.Features.Client
 {
     internal class PalantirBot
     {

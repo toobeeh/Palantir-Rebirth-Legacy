@@ -1,4 +1,7 @@
 ﻿using Palantir_Rebirth.Data.SQLite;
+using Palantir_Rebirth.Features.Client;
+using Palantir_Rebirth.Features.Lobbies;
+using Palantir_Rebirth.Features.Quartz;
 using System;
 using System.Resources;
 
@@ -17,6 +20,9 @@ namespace Palantir_Rebirth
             palantirDb = new PalantirDatabase(config.PalantirDatabasePath);
 
             await palantir.Connect();
+
+            var lobbyCollector = new LobbyCollectorJob(palantirDb);
+            lobbyCollector.Execute(null as Quartz.IJobExecutionContext);
 
             await Task.Delay(-1);
         }

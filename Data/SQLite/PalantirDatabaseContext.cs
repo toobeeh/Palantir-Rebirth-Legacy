@@ -40,10 +40,12 @@ namespace Palantir_Rebirth.Data.SQLite
         public DbSet<OnlineItemsEntity> OnlineItems { get; set; }
         public DbSet<SpriteProfileEntity> SpriteProfiles { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite("Data Source=" + this.path);
+            => options.UseSqlite("Data Source=" + path);
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ReportEntity>()
+                .HasKey(e => new { e.LobbyID, e.ObserveToken });
             modelBuilder.Entity<EventCreditEntity>()
                 .HasKey(e => new { e.Login, e.EventDropID });
             modelBuilder.Entity<WebhookEntity>()
@@ -70,12 +72,12 @@ namespace Palantir_Rebirth.Data.SQLite
         public int Bubbles { get; set; }
         public int Drops { get; set; }
         public int Flag { get; set; }
-        public string Emoji { get; set; }
-        public string Patronize { get; set; }
-        public string Customcard { get; set; }
-        public string Scenes { get; set; }
+        public string? Emoji { get; set; }
+        public string? Patronize { get; set; }
+        public string? Customcard { get; set; }
+        public string? Scenes { get; set; }
         public string Streamcode { get; set; }
-        public string RainbowSprites { get; set; }
+        public string? RainbowSprites { get; set; }
     }
     public class PalantirEntity
     {
@@ -93,7 +95,7 @@ namespace Palantir_Rebirth.Data.SQLite
         public bool Special { get; set; }
         public bool Rainbow { get; set; }
         public int EventDropID { get; set; }
-        public string Artist { get; set; }
+        public string? Artist { get; set; }
     }
     public class SceneEntity
     {
@@ -109,7 +111,6 @@ namespace Palantir_Rebirth.Data.SQLite
     }
     public class ReportEntity
     {
-        [Key]
         public string LobbyID { get; set; }
         public string ObserveToken { get; set; }
         public string Report { get; set; }
@@ -230,8 +231,8 @@ namespace Palantir_Rebirth.Data.SQLite
         [Key]
         public string Ticket { get; set; }
         public string Theme { get; set; }
-        public string ThumbnailLanding { get; set; }
-        public string ThumbnailGame { get; set; }
+        public string? ThumbnailLanding { get; set; }
+        public string? ThumbnailGame { get; set; }
         public string Name { get; set; }
         public string Author { get; set; }
         public string Description { get; set; }
