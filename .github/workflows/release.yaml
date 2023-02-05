@@ -13,8 +13,8 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         script: |
-            sudo service palantir-rebirth stop
+            sudo service palantir-nightly stop
             cd /home/pi/Palantir-Rebirth
             sudo git pull
             sudo dotnet build
-            sudo service palantir-rebirth start
+            sudo service palantir-nightly start
