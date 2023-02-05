@@ -5,6 +5,7 @@ using Palantir_Rebirth.Features.Quartz;
 using Quartz;
 using System;
 using System.Resources;
+using System.Diagnostics;
 
 namespace Palantir_Rebirth
 {
@@ -16,6 +17,11 @@ namespace Palantir_Rebirth
         static async Task Main(string[] args)
         {
             var config = Data.JSON.JSONUtils.FromFile<Data.JSON.BotConfig>(args[0]);
+
+            while (config.Nightly && !Debugger.IsAttached)
+            {
+                Task.Delay(1000);
+            }
 
             PalantirDb = new PalantirDatabase(config.PalantirDatabasePath);
             Palantir = new PalantirBot(config.TokenPath, config.Nightly);
