@@ -22,6 +22,7 @@ namespace Palantir_Rebirth
 
             await Palantir.Connect();
             await Palantir.SendDebugMessage("Hello there!");
+            await Palantir.LoadGuilds();
 
             var scheduler = await QuartzUtils.GetScheduler();
             await QuartzUtils.ScheduleLobbyCollector(scheduler);

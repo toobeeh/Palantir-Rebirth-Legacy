@@ -60,6 +60,7 @@ namespace Palantir_Rebirth.Features.Client
             foreach(var guild in guilds)
             {
                 var service = new LobbiesService(client, guild);
+                await service.Start();
                 await Task.Delay(200); // avoid rate limits: 50/s. Guild init takes up to 12 calls for the message setup
             }
         }

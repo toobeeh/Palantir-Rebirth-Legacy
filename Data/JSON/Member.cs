@@ -18,8 +18,8 @@ namespace Palantir_Rebirth.Data.JSON
     {
         public Member PlayerMember { get; set; }
         public string Status { get; set; }
-        public string LobbyID { get; set; }
-        public string LobbyPlayerID { get; set; }
+        public string? LobbyID { get; set; }
+        public string? LobbyPlayerID { get; set; }
     }
     public class CustomCard
     {
