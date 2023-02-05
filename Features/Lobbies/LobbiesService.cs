@@ -1,4 +1,5 @@
-﻿using DSharpPlus;
+﻿using DSharp.FrameWork;
+using DSharpPlus;
 using DSharpPlus.Entities;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -128,6 +129,7 @@ namespace Palantir_Rebirth.Features.Lobbies
         {
             while (Active)
             {
+                Console.WriteLine("loopd");
                 string message = await BuildLobbyContent();
                 List<string> splits = new();
 

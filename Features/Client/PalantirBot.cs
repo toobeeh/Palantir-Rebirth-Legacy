@@ -55,12 +55,14 @@ namespace Palantir_Rebirth.Features.Client
 
         public async Task LoadGuilds()
         {
+            Console.WriteLine("loading");
             var guilds = nightly ? 
                 await Program.PalantirDb.QueryAsync(db => db.PalantiriNightly) : 
                 await Program.PalantirDb.QueryAsync(db => db.Palantiri);
 
             foreach(var guild in guilds)
             {
+                Console.WriteLine(guild.Token);
                 var service = new LobbiesService(client, guild);
                 await service.Start();
                 await Task.Delay(200); // avoid rate limits: 50/s. Guild init takes up to 12 calls for the message setup
