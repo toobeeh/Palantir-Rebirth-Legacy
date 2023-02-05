@@ -87,7 +87,7 @@ namespace Palantir_Rebirth.Features.Quartz
 
                 onlineLobbies.Add(observeToken, guildLobbies);
 
-                foreach(var l in guildLobbies)
+                if(observeToken == "79177353") foreach(var l in guildLobbies)
                 {
                     text += "\n\nLobby: \n";
                     foreach(var p in l.Players)
