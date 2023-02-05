@@ -18,7 +18,7 @@ namespace Palantir_Rebirth.Data.SQLite
 
         public DbSet<MemberEntity> Members { get; set; }
         public DbSet<PalantirEntity> Palantiri { get; set; }
-        public DbSet<PalantirEntity> PalantiriNightly { get; set; }
+        public DbSet<PalantirNightlyEntity> PalantiriNightly { get; set; }
         public DbSet<ReportEntity> Reports { get; set; }
         public DbSet<LobbyEntity> Lobbies { get; set; }
         public DbSet<GuildLobbiesEntity> GuildLobbies { get; set; }
@@ -81,6 +81,12 @@ namespace Palantir_Rebirth.Data.SQLite
         public string? RainbowSprites { get; set; }
     }
     public class PalantirEntity
+    {
+        [Key]
+        public string Token { get; set; }
+        public string Palantir { get; set; }
+    }
+    public class PalantirNightlyEntity
     {
         [Key]
         public string Token { get; set; }
