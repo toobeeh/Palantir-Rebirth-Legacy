@@ -18,6 +18,7 @@ namespace Palantir_Rebirth.Data.SQLite
 
         public DbSet<MemberEntity> Members { get; set; }
         public DbSet<PalantirEntity> Palantiri { get; set; }
+        public DbSet<PalantirEntity> PalantiriNightly { get; set; }
         public DbSet<ReportEntity> Reports { get; set; }
         public DbSet<LobbyEntity> Lobbies { get; set; }
         public DbSet<GuildLobbiesEntity> GuildLobbies { get; set; }
@@ -44,8 +45,6 @@ namespace Palantir_Rebirth.Data.SQLite
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<PalantirEntity>()
-                .HasKey(e => new { e.Token, e.Nightly });
             modelBuilder.Entity<ReportEntity>()
                 .HasKey(e => new { e.LobbyID, e.ObserveToken, e.Report });
             modelBuilder.Entity<EventCreditEntity>()
@@ -83,9 +82,9 @@ namespace Palantir_Rebirth.Data.SQLite
     }
     public class PalantirEntity
     {
+        [Key]
         public string Token { get; set; }
         public string Palantir { get; set; }
-        public int Nightly { get; set; }
     }
     public class SpritesEntity
     {

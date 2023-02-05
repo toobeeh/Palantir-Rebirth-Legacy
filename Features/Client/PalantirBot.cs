@@ -55,8 +55,10 @@ namespace Palantir_Rebirth.Features.Client
 
         public async Task LoadGuilds()
         {
-            int n = nightly ? 1 : 0;
-            var guilds = await Program.PalantirDb.QueryAsync(db => db.Palantiri.Where(p => p.Nightly == n));
+            var guilds = nightly ? 
+                await Program.PalantirDb.QueryAsync(db => db.PalantiriNightly) : 
+                await Program.PalantirDb.QueryAsync(db => db.Palantiri);
+
             foreach(var guild in guilds)
             {
                 var service = new LobbiesService(client, guild);
