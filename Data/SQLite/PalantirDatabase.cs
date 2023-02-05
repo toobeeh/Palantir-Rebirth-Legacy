@@ -25,7 +25,7 @@ namespace Palantir_Rebirth.Data.SQLite
             await context.DisposeAsync();
         }
 
-        public async Task<List<TResult>> QueryAsync<TResult>(Func<PalantirDatabaseContext, List<TResult>> query, bool save = false)
+        public async Task<List<TResult>> QueryAsync<TResult>(Func<PalantirDatabaseContext, IEnumerable<TResult>> query, bool save = false)
         {
             var context = Open();
             try
@@ -36,7 +36,7 @@ namespace Palantir_Rebirth.Data.SQLite
             }
             catch (Exception e)
             {
-                Logger.Error(e.ToString());
+                Logger.Error("Failed to execute async db query", e);
                 await Close(context, save);
                 return new List<TResult>();
             }
@@ -53,7 +53,7 @@ namespace Palantir_Rebirth.Data.SQLite
             }
             catch(Exception e)
             {
-                Logger.Error(e.ToString());
+                Logger.Error("Failed to execute sync db query", e);
                 Close(context, save).GetAwaiter().GetResult();
                 return new List<TResult>();
             }

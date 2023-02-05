@@ -84,6 +84,7 @@ namespace Palantir_Rebirth.Data.SQLite
         [Key]
         public string Token { get; set; }
         public string Palantir { get; set; }
+        public int Nightly { get; set; }
     }
     public class SpritesEntity
     {

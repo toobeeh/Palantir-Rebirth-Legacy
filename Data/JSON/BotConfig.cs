@@ -11,6 +11,6 @@ namespace Palantir_Rebirth.Data.JSON
         public string BotName { get; set; }
         public string TokenPath { get; set; }
         public string PalantirDatabasePath { get; set; }
-
+        public bool Nightly { get; set; }
     }
 }

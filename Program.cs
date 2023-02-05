@@ -17,8 +17,8 @@ namespace Palantir_Rebirth
         {
             var config = Data.JSON.JSONUtils.FromFile<Data.JSON.BotConfig>(args[0]);
 
-            Palantir = new PalantirBot(config.TokenPath);
             PalantirDb = new PalantirDatabase(config.PalantirDatabasePath);
+            Palantir = new PalantirBot(config.TokenPath, config.Nightly);
 
             await Palantir.Connect();
             await Palantir.SendDebugMessage("Hello there!");

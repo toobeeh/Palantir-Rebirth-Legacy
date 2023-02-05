@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.SlashCommands;
+using Palantir_Rebirth.Features.Lobbies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,13 @@ namespace Palantir_Rebirth.Features.Client
     internal class PalantirBot
     {
         private DiscordClient client;
+        private readonly bool nightly;
         public InteractivityExtension Interactivity { private set; get; }
 
-        public PalantirBot(string tokenPath)
+        public PalantirBot(string tokenPath, bool nightly)
         {
             string token = File.ReadAllText(tokenPath);
+            this.nightly = nightly;
 
             client = new DiscordClient(new DiscordConfiguration
             {
@@ -47,7 +50,18 @@ namespace Palantir_Rebirth.Features.Client
 
         public async Task SendDebugMessage(string message)
         {
-            await (await Program.Palantir.client.GetChannelAsync(1071167977946353745)).SendMessageAsync(message);
+            await (await client.GetChannelAsync(1071167977946353745)).SendMessageAsync(message);
+        }
+
+        public async Task LoadGuilds()
+        {
+            int n = nightly ? 1 : 0;
+            var guilds = await Program.PalantirDb.QueryAsync(db => db.Palantiri.Where(p => p.Nightly == n));
+            foreach(var guild in guilds)
+            {
+                var service = new LobbiesService(client, guild);
+                await Task.Delay(200); // avoid rate limits: 50/s. Guild init takes up to 12 calls for the message setup
+            }
         }
     }
 }

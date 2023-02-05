@@ -8,9 +8,9 @@ namespace Palantir_Rebirth
 {
     internal class Logger
     {
-        public static void Error(string message)
+        public static void Error(string message, Exception ex)
         {
-            Console.Error.WriteLine("[ERROR] [" +DateTime.Now.ToShortTimeString() + "] " + message);
+            Console.Error.WriteLine("[ERROR] [" +DateTime.Now.ToShortTimeString() + "] " + message + "\n" + ex.ToString());
         }
     }
 }

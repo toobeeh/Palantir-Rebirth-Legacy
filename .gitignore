@@ -5,4 +5,5 @@ obj
 *.db-shm
 *.db-wal
 token.txt
+config.json
 /.editorconfig
