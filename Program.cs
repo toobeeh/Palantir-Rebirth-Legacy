@@ -6,6 +6,7 @@ using Quartz;
 using System;
 using System.Resources;
 using System.Diagnostics;
+using Palantir_Rebirth.Data.JSON;
 
 namespace Palantir_Rebirth
 {
@@ -16,12 +17,12 @@ namespace Palantir_Rebirth
 
         static async Task Main(string[] args)
         {
-            var config = Data.JSON.JSONUtils.FromFile<Data.JSON.BotConfig>(args[0]);
+            var config = JSONUtils.FromFile<BotConfig>(args[0]);
 
-            while (config.Nightly && !Debugger.IsAttached)
-            {
-                Thread.Sleep(1000);
-            }
+            //while (config.Nightly && !Debugger.IsAttached)
+            //{
+            //    Thread.Sleep(1000);
+            //}
 
             PalantirDb = new PalantirDatabase(config.PalantirDatabasePath);
             Palantir = new PalantirBot(config.TokenPath, config.Nightly);
