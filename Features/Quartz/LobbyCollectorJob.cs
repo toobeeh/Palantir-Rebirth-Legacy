@@ -51,7 +51,7 @@ namespace Palantir_Rebirth.Features.Quartz
             // get all distinct receiver guilds
             var guilds = reports.Select(report => report.ObserveToken).Distinct();
 
-            string text = "\n\n====== MSG =======\n";
+            string text = "\n_ _\n====== MSG =======\n";
 
             // set unique lobby for each guild
             Dictionary<string, List<Lobby>> onlineLobbies = new();
@@ -89,7 +89,7 @@ namespace Palantir_Rebirth.Features.Quartz
 
                 foreach(var l in guildLobbies)
                 {
-                    text += "\nLobby: \n";
+                    text += "\n\nLobby: \n";
                     foreach(var p in l.Players)
                     {
                         text += p.Name + (p.ID != null ? p.ID.ToString() : "") + "; ";
