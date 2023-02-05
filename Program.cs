@@ -21,6 +21,7 @@ namespace Palantir_Rebirth
             PalantirDb = new PalantirDatabase(config.PalantirDatabasePath);
 
             await Palantir.Connect();
+            await Palantir.SendDebugMessage("Hello there!");
 
             var scheduler = await QuartzUtils.GetScheduler();
             await QuartzUtils.ScheduleLobbyCollector(scheduler);
