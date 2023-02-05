@@ -18,10 +18,10 @@ namespace Palantir_Rebirth
         {
             var config = Data.JSON.JSONUtils.FromFile<Data.JSON.BotConfig>(args[0]);
 
-            while (config.Nightly && !Debugger.IsAttached)
-            {
-                await Task.Delay(1000);
-            }
+            //while (config.Nightly && !Debugger.IsAttached)
+            //{
+            //    await Task.Delay(1000);
+            //}
 
             PalantirDb = new PalantirDatabase(config.PalantirDatabasePath);
             Palantir = new PalantirBot(config.TokenPath, config.Nightly);
