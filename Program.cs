@@ -19,10 +19,10 @@ namespace Palantir_Rebirth
         {
             var config = JSONUtils.FromFile<BotConfig>(args[0]);
 
-            //while (config.Nightly && !Debugger.IsAttached)
-            //{
-            //    Thread.Sleep(1000);
-            //}
+            while (config.Nightly && !Debugger.IsAttached)
+            {
+                Thread.Sleep(1000);
+            }
 
             PalantirDb = new PalantirDatabase(config.PalantirDatabasePath);
             Palantir = new PalantirBot(config.TokenPath, config.Nightly);
