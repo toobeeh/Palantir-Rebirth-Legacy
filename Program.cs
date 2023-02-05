@@ -20,7 +20,7 @@ namespace Palantir_Rebirth
 
             while (config.Nightly && !Debugger.IsAttached)
             {
-                Task.Delay(1000);
+                await Task.Delay(1000);
             }
 
             PalantirDb = new PalantirDatabase(config.PalantirDatabasePath);
