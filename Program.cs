@@ -18,6 +18,7 @@ namespace Palantir_Rebirth
         {
             var config = Data.JSON.JSONUtils.FromFile<Data.JSON.BotConfig>(args[0]);
 
+            Console.WriteLine(Debugger.IsAttached);
             //while (config.Nightly && !Debugger.IsAttached)
             //{
             //    await Task.Delay(1000);
