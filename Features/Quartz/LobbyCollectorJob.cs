@@ -47,11 +47,8 @@ namespace Palantir_Rebirth.Features.Quartz
                     }
              )).Flatten().Cast<SenderTuple>();
 
-
             // get all distinct receiver guilds
             var guilds = reports.Select(report => report.ObserveToken).Distinct();
-
-            string text = "\n_ _\n====== MSG =======\n";
 
             // set unique lobby for each guild
             Dictionary<string, List<Lobby>> onlineLobbies = new();
@@ -86,22 +83,9 @@ namespace Palantir_Rebirth.Features.Quartz
                 }
 
                 onlineLobbies.Add(observeToken, guildLobbies);
-
-                if(observeToken == "79177353") foreach(var l in guildLobbies)
-                {
-                    text += "\n\nLobby: \n";
-                    foreach(var p in l.Players)
-                    {
-                        text += p.Name + (p.ID != null ? p.ID.ToString() : "") + "; ";
-                    }
-                }
-
             }
 
             GuildLobbies = onlineLobbies;
-
-
-            await Program.Palantir.SendDebugMessage(text);
         }
     }
 }

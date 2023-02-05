@@ -45,7 +45,7 @@ namespace Palantir_Rebirth.Data.SQLite
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ReportEntity>()
-                .HasKey(e => new { e.LobbyID, e.ObserveToken });
+                .HasKey(e => new { e.LobbyID, e.ObserveToken, e.Report });
             modelBuilder.Entity<EventCreditEntity>()
                 .HasKey(e => new { e.Login, e.EventDropID });
             modelBuilder.Entity<WebhookEntity>()
