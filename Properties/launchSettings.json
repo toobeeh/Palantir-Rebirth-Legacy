@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Palantir-Rebirth": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\User\\source\\repos\\toobeeh\\Palantir-Rebirth\\config.json"
+    }
+  }
+}

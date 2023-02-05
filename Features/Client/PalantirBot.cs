@@ -14,7 +14,7 @@ namespace Palantir_Rebirth.Features.Client
     internal class PalantirBot
     {
         private DiscordClient client;
-        public InteractivityExtension interactivity { private set; get; }
+        public InteractivityExtension Interactivity { private set; get; }
 
         public PalantirBot(string tokenPath)
         {
@@ -37,12 +37,17 @@ namespace Palantir_Rebirth.Features.Client
 
             var slash = client.UseSlashCommands();
 
-            interactivity = client.UseInteractivity();
+            Interactivity = client.UseInteractivity();
         }
 
         public async Task Connect()
         {
             await client.ConnectAsync();
+        }
+
+        public async Task SendDebugMessage(string message)
+        {
+            await (await Program.Palantir.client.GetChannelAsync(1071167977946353745)).SendMessageAsync(message);
         }
     }
 }

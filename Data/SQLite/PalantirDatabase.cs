@@ -25,12 +25,21 @@ namespace Palantir_Rebirth.Data.SQLite
             await context.DisposeAsync();
         }
 
-        public async Task<TResult> QueryAsync<TResult>(Func<PalantirDatabaseContext, TResult> query, bool save = false)
+        public async Task<List<TResult>> QueryAsync<TResult>(Func<PalantirDatabaseContext, List<TResult>> query, bool save = false)
         {
             var context = Open();
-            var result = query.Invoke(context);
-            await Close(context, save);
-            return result;
+            try
+            {
+                var result = query.Invoke(context).ToList();
+                await Close(context, save);
+                return result;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.ToString());
+                await Close(context, save);
+                return new List<TResult>();
+            }
         }
 
         public List<TResult> Query<TResult>(Func<PalantirDatabaseContext, IEnumerable<TResult>> query, bool save = false)

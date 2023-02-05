@@ -9,20 +9,20 @@ namespace Palantir_Rebirth
 {
     internal class Program
     {
-        public static PalantirBot palantir;
-        public static PalantirDatabase palantirDb;
+        public static PalantirBot Palantir;
+        public static PalantirDatabase PalantirDb;
 
         static async Task Main(string[] args)
         {
-            var config = Data.JSON.Utils.FromFile<Data.JSON.BotConfig>(@"C:\Users\User\source\repos\toobeeh\Palantir-Rebirth\config.json");
+            var config = Data.JSON.JSONUtils.FromFile<Data.JSON.BotConfig>(args[0]);
 
-            palantir = new PalantirBot(config.TokenPath);
-            palantirDb = new PalantirDatabase(config.PalantirDatabasePath);
+            Palantir = new PalantirBot(config.TokenPath);
+            PalantirDb = new PalantirDatabase(config.PalantirDatabasePath);
 
-            await palantir.Connect();
+            await Palantir.Connect();
 
-            var lobbyCollector = new LobbyCollectorJob(palantirDb);
-            lobbyCollector.Execute(null as Quartz.IJobExecutionContext);
+            var scheduler = await QuartzUtils.GetScheduler();
+            await QuartzUtils.ScheduleLobbyCollector(scheduler);
 
             await Task.Delay(-1);
         }

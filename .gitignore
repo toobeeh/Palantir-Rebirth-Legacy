@@ -2,5 +2,7 @@
 obj
 .vs
 *.db
+*.db-shm
+*.db-wal
 token.txt
 /.editorconfig

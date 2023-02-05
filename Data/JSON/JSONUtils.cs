@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Palantir_Rebirth.Data.JSON
 {
-    internal static class Utils
+    internal static class JSONUtils
     {
         public static T FromString<T>(string json)
         {

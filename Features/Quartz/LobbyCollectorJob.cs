@@ -13,14 +13,14 @@ namespace Palantir_Rebirth.Features.Quartz
     internal class LobbyCollectorJob : IJob
     {
         class SenderTuple { public string observeToken; public string lobbyID; public string playerID; public PlayerStatus? status; }
-        public Dictionary<string, List<Lobby>> GuildLobbies { get; private set; }
+        public static Dictionary<string, List<Lobby>> GuildLobbies { get; private set; }
 
-        private readonly PalantirDatabase db;
+        private static readonly PalantirDatabase db;
 
-        public LobbyCollectorJob(PalantirDatabase db) 
+        static LobbyCollectorJob() 
         {
             GuildLobbies = new Dictionary<string, List<Lobby>>();
-            this.db = db;
+            db = Program.PalantirDb;
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -29,14 +29,14 @@ namespace Palantir_Rebirth.Features.Quartz
             var reports = db.Query(db => db.Reports);
 
             // get all status
-            var status = db.Query(db => db.Status).Select(status => Utils.FromString<PlayerStatus>(status.Status));
+            var status = db.Query(db => db.Status).Select(status => JSONUtils.FromString<PlayerStatus>(status.Status));
 
             // get distinct reports
             var lobbies = MoreLinq.Extensions.DistinctByExtension.DistinctBy(reports, report => report.LobbyID).Select(report => report.Report);
 
             // get all senders
             var senders = reports.Select(report =>
-                Utils.FromString<Lobby>(report.Report)
+                JSONUtils.FromString<Lobby>(report.Report)
                     .Players
                     .Where(player => player.Sender)
                     .Select(player => new SenderTuple { 
@@ -51,16 +51,17 @@ namespace Palantir_Rebirth.Features.Quartz
             // get all distinct receiver guilds
             var guilds = reports.Select(report => report.ObserveToken).Distinct();
 
+            string text = "\n\n====== MSG =======\n";
+
             // set unique lobby for each guild
             Dictionary<string, List<Lobby>> onlineLobbies = new();
             foreach (string observeToken in guilds)
             {
                 List<Lobby> guildLobbies = new();
-                int totalSender = 0;
 
                 foreach (string report in lobbies)
                 {
-                    var lobby = Utils.FromString<Lobby>(report);
+                    var lobby = JSONUtils.FromString<Lobby>(report);
                     int guildSenders = 0;
 
                     // check if player is sender for a guild
@@ -80,17 +81,27 @@ namespace Palantir_Rebirth.Features.Quartz
                         }
                         else player.Sender = false;
                     }
-
-                    totalSender += guildSenders;
                     
                     if(guildSenders > 0) guildLobbies.Add(lobby);
                 }
 
                 onlineLobbies.Add(observeToken, guildLobbies);
 
+                foreach(var l in guildLobbies)
+                {
+                    text += "\nLobby: \n";
+                    foreach(var p in l.Players)
+                    {
+                        text += p.Name + (p.ID != null ? p.ID.ToString() : "") + "; ";
+                    }
+                }
+
             }
 
             GuildLobbies = onlineLobbies;
+
+
+            await Program.Palantir.SendDebugMessage(text);
         }
     }
 }
