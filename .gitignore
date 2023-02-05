@@ -7,3 +7,4 @@ obj
 token.txt
 config.json
 /.editorconfig
+/config.json

@@ -18,10 +18,10 @@ namespace Palantir_Rebirth
         static async Task Main(string[] args)
         {
             var config = JSONUtils.FromFile<BotConfig>(args[0]);
-            while (config.Nightly && !Debugger.IsAttached)
-            {
-                Thread.Sleep(1000);
-            }
+            //while (config.Nightly && !Debugger.IsAttached)
+            //{
+            //    Thread.Sleep(1000);
+            //}
 
             Console.WriteLine("hi");
             PalantirDb = new PalantirDatabase(config.PalantirDatabasePath);
