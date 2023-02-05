@@ -1,0 +1,20 @@
+﻿name: Release
+on: [push]
+jobs:
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+    - name: pull, build and execute on typo server
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        script: |
+            sudo service palantir-rebirth stop
+            cd /home/pi/Palantir-Rebirth
+            sudo git pull
+            sudo dotnet build
+            sudo service palantir-rebirth start

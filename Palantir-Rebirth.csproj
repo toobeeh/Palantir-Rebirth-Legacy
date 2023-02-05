@@ -24,4 +24,8 @@
     <PackageReference Include="Quartz" Version="3.6.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include=".github\workflows\release.yaml" />
+  </ItemGroup>
+
 </Project>
