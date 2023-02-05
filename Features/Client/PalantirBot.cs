@@ -30,15 +30,15 @@ namespace Palantir_Rebirth.Features.Client
                 MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Information
             });
 
-            //var commands = client.UseCommandsNext(new CommandsNextConfiguration
-            //{
-            //    StringPrefixes = new string[] { "." },
-            //    DmHelp = false,
-            //    IgnoreExtraArguments = true,
-            //    CaseSensitive = false
-            //});
+            var commands = client.UseCommandsNext(new CommandsNextConfiguration
+            {
+                StringPrefixes = new string[] { "." },
+                DmHelp = false,
+                IgnoreExtraArguments = true,
+                CaseSensitive = false
+            });
 
-            //var slash = client.UseSlashCommands();
+            var slash = client.UseSlashCommands();
 
             Interactivity = client.UseInteractivity();
         }

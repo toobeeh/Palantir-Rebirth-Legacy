@@ -33,7 +33,7 @@ namespace Palantir_Rebirth
             Console.WriteLine("hi");
             await Palantir.SendDebugMessage("Hello there!");
             Console.WriteLine("hi");
-            await Palantir.LoadGuilds();
+           // await Palantir.LoadGuilds();
 
             Console.WriteLine("hi");
             var scheduler = await QuartzUtils.GetScheduler();
