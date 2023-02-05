@@ -44,6 +44,8 @@ namespace Palantir_Rebirth.Data.SQLite
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<PalantirEntity>()
+                .HasKey(e => new { e.Token, e.Nightly });
             modelBuilder.Entity<ReportEntity>()
                 .HasKey(e => new { e.LobbyID, e.ObserveToken, e.Report });
             modelBuilder.Entity<EventCreditEntity>()
@@ -81,7 +83,6 @@ namespace Palantir_Rebirth.Data.SQLite
     }
     public class PalantirEntity
     {
-        [Key]
         public string Token { get; set; }
         public string Palantir { get; set; }
         public int Nightly { get; set; }
