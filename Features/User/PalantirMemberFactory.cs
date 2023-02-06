@@ -33,7 +33,7 @@ namespace Palantir_Rebirth.Features.User
         }
         public static PalantirMember ByToken(string token)
         {
-            return ByToken(Convert.ToInt16(token));
+            return ByToken(Convert.ToInt32(token));
         }
 
         public static PalantirMember ByDiscordID(ulong discordID)
@@ -51,7 +51,7 @@ namespace Palantir_Rebirth.Features.User
             if (member == null) throw new Exception("no member with such discord id");
 
             instance = new PalantirMember(member.UserLogin);
-            instancesByToken.Add(Convert.ToInt16(instance.Token), instance);
+            instancesByToken.Add(Convert.ToInt32(instance.Token), instance);
             instancesByID.Add(discordID, instance);
             return instance;
         }
