@@ -163,7 +163,8 @@ namespace Palantir_Rebirth.Features.Lobbies
                     {
                         try
                         {
-                            await messages[splitIndex].ModifyAsync(split.Replace(" ", ""));
+                            var newmsg = await messages[splitIndex].ModifyAsync(split.Replace(" ", ""));
+                            messages[splitIndex] = newmsg;
                         }
                         catch (Exception ex)
                         {
@@ -172,6 +173,15 @@ namespace Palantir_Rebirth.Features.Lobbies
                     }
 
                     splitIndex++;
+                }
+
+                // clear remaining messages
+                for(int i = splitIndex + 1; i < messages.Count; i++){
+                    if(messages[i].Content != "_ _")
+                    {
+                        var newmsg = await messages[i].ModifyAsync("_ _");
+                        messages[i] = newmsg;
+                    }
                 }
 
                 await Task.Delay(5000);
@@ -227,7 +237,7 @@ namespace Palantir_Rebirth.Features.Lobbies
                     + "\n> " + lobby.Players.Count + " Players \n";
 
                 // add lobby description
-                if (lobbyDescription != "") lobbyText += lobbyDescription.Replace("\\", "") + "\n";
+                if (lobbyDescription != "") lobbyText += lobbyDescription.Replace("\\", "");
 
                 string players = "";
                 string sender = "```fix\n";
