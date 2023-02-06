@@ -40,19 +40,19 @@ namespace Palantir_Rebirth.Features.Quartz
             var lobbyDetails = db.Query(db => db.Lobbies).Select(lobby => JSONUtils.FromString<ProvidedLobby>(lobby.Lobby));
 
             // get all senders
-            var senders = reports.Select(report =>
-                JSONUtils.FromString<Lobby>(report.Report)
-                    .Players
-                    .Where(player => player.Sender)
-                    .Select(player => new SenderTuple { 
-                        observeToken = report.ObserveToken, 
-                        lobbyID = report.LobbyID, 
-                        playerID = player.LobbyPlayerID ,
-                        status = status.FirstOrDefault(status => status.LobbyPlayerID == player.LobbyPlayerID && status.LobbyID == report.LobbyID)
-                    }
-             )).Flatten().Cast<SenderTuple>();
+            //var senders = reports.Select(report =>
+            //    JSONUtils.FromString<Lobby>(report.Report)
+            //        .Players
+            //        .Where(player => player.Sender)
+            //        .Select(player => new SenderTuple { 
+            //            observeToken = report.ObserveToken, 
+            //            lobbyID = report.LobbyID, 
+            //            playerID = player.LobbyPlayerID ,
+            //            status = status.FirstOrDefault(status => status.LobbyPlayerID == player.LobbyPlayerID && status.LobbyID == report.LobbyID)
+            //        }
+            // )).Flatten().Cast<SenderTuple>();
 
-            Console.WriteLine(senders.Select(sender => sender.observeToken + " " + sender.status?.PlayerMember.UserName).ToDelimitedString(", "));
+            //Console.WriteLine(senders.Select(sender => sender.observeToken + " " + sender.status?.PlayerMember.UserName).ToDelimitedString(", "));
 
             // get all distinct receiver guilds
             var guilds = reports.Select(report => report.ObserveToken).Distinct();
@@ -75,11 +75,11 @@ namespace Palantir_Rebirth.Features.Quartz
                     // check if player is sender for a guild
                     foreach(Player player in lobby.Players)
                     {
-                        var sender = senders.FirstOrDefault(sender => sender.observeToken == observeToken && sender.lobbyID == lobby.ID && sender.playerID == player.LobbyPlayerID);
+                        var playerstatus = status.FirstOrDefault(s => s.LobbyPlayerID == player.LobbyPlayerID && s.LobbyID == lobby.ID && s.PlayerMember.Guilds.Any(g => g.ObserveToken == observeToken));
 
-                        if (sender != null && sender.status != null)
+                        if (playerstatus != null)
                         {
-                            player.ID = sender.status.PlayerMember.UserID;
+                            player.ID = playerstatus.PlayerMember.UserID;
                             player.Sender = true;
                             guildSenders++;
                         }
