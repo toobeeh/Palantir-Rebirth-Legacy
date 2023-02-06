@@ -282,7 +282,7 @@ namespace Palantir_Rebirth.Features.Lobbies
                 if (players.Length > 0) lobbyText += players;
 
                 lobbyText += "\n\n\n";
-                message += lobby;
+                message += lobbyText;
                 message += " "; // lobby break indicator em space
             }
 
