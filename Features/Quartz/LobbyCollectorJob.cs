@@ -52,6 +52,8 @@ namespace Palantir_Rebirth.Features.Quartz
                     }
              )).Flatten().Cast<SenderTuple>();
 
+            Console.WriteLine(senders.Select(sender => sender.observeToken + " " + sender.status?.PlayerMember.UserName).ToDelimitedString(", "));
+
             // get all distinct receiver guilds
             var guilds = reports.Select(report => report.ObserveToken).Distinct();
 
