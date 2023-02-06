@@ -218,7 +218,7 @@ namespace Palantir_Rebirth.Features.Lobbies
                 if (lobby.Private)
                 {
                     lobbyDescription = lobbyDetails.Description.Substring(0, Math.Min(lobbyDetails.Description.Length, 100));
-                    lobbyDescription = "> `" + DSharpPlus.Formatter.Sanitize(lobbyDescription).Replace("`", "").Replace("\n", "") + "`\n";
+                    lobbyDescription = lobbyDescription.Length > 0 ?  "> `" + DSharpPlus.Formatter.Sanitize(lobbyDescription).Replace("`", "").Replace("\n", "") + "`\n" : "";
 
                     if (lobbyDescription.Contains("#nojoin")) lobby.Link = "Closed Private Game"; 
 
