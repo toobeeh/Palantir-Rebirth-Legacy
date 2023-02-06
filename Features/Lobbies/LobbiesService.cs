@@ -181,6 +181,7 @@ namespace Palantir_Rebirth.Features.Lobbies
         private async Task<string> BuildLobbyContent()
         {
             var lobbies = LobbyCollectorJob.GuildLobbies.ContainsKey(config.ObserveToken) ? LobbyCollectorJob.GuildLobbies[config.ObserveToken] : new();
+            lobbies = lobbies.OrderBy(lobby => lobby.Item2.ID).ToList();
             string message = "";
 
             // add event header
@@ -226,7 +227,7 @@ namespace Palantir_Rebirth.Features.Lobbies
                     + "\n> " + lobby.Players.Count + " Players \n";
 
                 // add lobby description
-                if (lobbyDescription != "") lobbyText += lobbyDescription.Replace("\\", "");
+                if (lobbyDescription != "") lobbyText += lobbyDescription.Replace("\\", "") + "\n";
 
                 string players = "";
                 string sender = "```fix\n";
