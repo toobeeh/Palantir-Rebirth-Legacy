@@ -188,7 +188,7 @@ namespace Palantir_Rebirth.Features.Lobbies
                     }
                 }
 
-                await Task.Delay(8000);
+                await Task.Delay(10000);
             }
         }
 
