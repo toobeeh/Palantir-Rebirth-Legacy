@@ -129,7 +129,6 @@ namespace Palantir_Rebirth.Features.Lobbies
         {
             while (Active)
             {
-                Console.WriteLine("loopd");
                 string message = await BuildLobbyContent();
                 List<string> splits = new();
 
@@ -147,11 +146,11 @@ namespace Palantir_Rebirth.Features.Lobbies
                 int splitIndex = 0;
                 foreach(var split in splits)
                 {
-                    if(messages.Count - 1 < splitIndex)
+                    if (messages.Count - 1 < splitIndex)
                     {
                         try
                         {
-                            var msg = await messages[0].Channel.SendMessageAsync(split);
+                            var msg = await messages[0].Channel.SendMessageAsync(split.Replace(" ", ""));
                             messages.Add(msg);
                             
                         }
@@ -164,7 +163,7 @@ namespace Palantir_Rebirth.Features.Lobbies
                     {
                         try
                         {
-                            await messages[splitIndex].ModifyAsync(split);
+                            await messages[splitIndex].ModifyAsync(split.Replace(" ", ""));
                         }
                         catch (Exception ex)
                         {

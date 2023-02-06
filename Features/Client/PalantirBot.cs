@@ -55,7 +55,6 @@ namespace Palantir_Rebirth.Features.Client
 
         public async Task LoadGuilds()
         {
-            Console.WriteLine("loading");
             List<Data.SQLite.PalantirEntity> guilds = nightly ? 
                 await Program.PalantirDb.QueryAsync<Data.SQLite.PalantirEntity>(db => db.PalantiriNightly) : 
                 await Program.PalantirDb.QueryAsync<Data.SQLite.PalantirEntity>(db => db.Palantiri);
