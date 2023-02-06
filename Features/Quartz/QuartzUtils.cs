@@ -28,7 +28,7 @@ namespace Palantir_Rebirth.Features.Quartz
                .Build();
             ITrigger trigger = TriggerBuilder.Create()
                 .StartNow()
-                .WithDailyTimeIntervalSchedule(t => t.WithIntervalInSeconds(3))
+                .WithDailyTimeIntervalSchedule(t => t.WithIntervalInSeconds(5))
                 .Build();
             await scheduler.ScheduleJob(detail, trigger);
         }

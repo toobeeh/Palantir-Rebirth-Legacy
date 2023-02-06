@@ -163,8 +163,11 @@ namespace Palantir_Rebirth.Features.Lobbies
                     {
                         try
                         {
-                            var newmsg = await messages[splitIndex].ModifyAsync(split.Replace(" ", ""));
-                            messages[splitIndex] = newmsg;
+                            if(messages[splitIndex].Content != split.Replace(" ", ""))
+                            {
+                                var newmsg = await messages[splitIndex].ModifyAsync(split.Replace(" ", ""));
+                                messages[splitIndex] = newmsg;
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -184,7 +187,7 @@ namespace Palantir_Rebirth.Features.Lobbies
                     }
                 }
 
-                await Task.Delay(5000);
+                await Task.Delay(8000);
             }
         }
 
