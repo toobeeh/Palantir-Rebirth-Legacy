@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.SlashCommands;
+using Palantir_Rebirth.Data.SQLite;
 using Palantir_Rebirth.Features.Lobbies;
 using System;
 using System.Collections.Generic;
@@ -56,16 +57,30 @@ namespace Palantir_Rebirth.Features.Client
         public async Task LoadGuilds()
         {
             Console.WriteLine("loading");
-            var guilds = nightly ? 
-                await Program.PalantirDb.QueryAsync(db => db.PalantiriNightly) : 
-                await Program.PalantirDb.QueryAsync(db => db.Palantiri);
-
-            foreach(var guild in guilds)
+            if (nightly)
             {
-                Console.WriteLine(guild.Token);
-                var service = new LobbiesService(client, guild);
-                await service.Start();
-                await Task.Delay(200); // avoid rate limits: 50/s. Guild init takes up to 12 calls for the message setup
+                var guilds =  await Program.PalantirDb.QueryAsync(db => db.PalantiriNightly);
+
+                foreach (var guild in guilds)
+                {
+                    Console.WriteLine(guild.Token);
+                    var g = new PalantirEntity({ Token=guild.Token, Palantir=guild.Palantir});
+                    var service = new LobbiesService(client, g);
+                    await service.Start();
+                    await Task.Delay(200); // avoid rate limits: 50/s. Guild init takes up to 12 calls for the message setup
+                }
+            }
+            else
+            {
+                var guilds = await Program.PalantirDb.QueryAsync(db => db.Palantiri);
+
+                foreach (var guild in guilds)
+                {
+                    Console.WriteLine(guild.Token);
+                    var service = new LobbiesService(client, guild);
+                    await service.Start();
+                    await Task.Delay(200); // avoid rate limits: 50/s. Guild init takes up to 12 calls for the message setup
+                }
             }
         }
     }
