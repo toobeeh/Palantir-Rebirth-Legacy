@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Palantir_Rebirth.Data.JSON;
 using Palantir_Rebirth.Data.SQLite;
 using Palantir_Rebirth.Features.Quartz;
+using Palantir_Rebirth.Features.User;
 using Quartz.Logging;
 using System;
 using System.Collections.Generic;
@@ -249,6 +250,8 @@ namespace Palantir_Rebirth.Features.Lobbies
                 {
                     if (player.Sender)
                     {
+                        var member = PalantirMemberFactory.ByDiscordID(player.ID);
+
                         senderCount++;
                         string line = "";
                         line += Formatter.Sanitize(player.Name).Replace("\\", " ").Replace("`", " ");
@@ -265,12 +268,12 @@ namespace Palantir_Rebirth.Features.Lobbies
                         line += new string(' ', (32 - line.Length) < 0 ? 0 : (32 - line.Length));
 
                         // add patron emoji or bubbles
-                        string patronEmoji = "";
+                        string patronEmoji = member.PatronEmoji;
                         if (patronEmoji.Length > 0)
                         {
                             line += "  " + patronEmoji + " ";
                         }
-                        else line += "  🔮 " + player.LobbyPlayerID + " Bubbles";
+                        else line += "  🔮 " + member.Bubbles + " Bubbles";
                         line += player.Drawing ? " 🖍 \n" : "\n";
                         sender += line;
                     }

@@ -27,7 +27,7 @@ namespace Palantir_Rebirth
             Palantir = new PalantirBot(config.TokenPath, config.Nightly);
 
             await Palantir.Connect();
-            await Palantir.SendDebugMessage("Hello there!");
+            //await Palantir.SendDebugMessage("Hello there!");
             await Palantir.LoadGuilds();
 
             var scheduler = await QuartzUtils.GetScheduler();
