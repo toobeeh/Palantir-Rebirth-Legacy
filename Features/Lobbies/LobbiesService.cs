@@ -147,7 +147,7 @@ namespace Palantir_Rebirth.Features.Lobbies
                 int splitIndex = 0;
                 foreach(var split in splits)
                 {
-                    if(messages.Count - 1 <= splitIndex)
+                    if(messages.Count - 1 < splitIndex)
                     {
                         try
                         {
