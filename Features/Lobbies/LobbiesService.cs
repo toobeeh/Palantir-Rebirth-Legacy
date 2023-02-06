@@ -151,7 +151,9 @@ namespace Palantir_Rebirth.Features.Lobbies
                     {
                         try
                         {
-                            await messages[splitIndex].ModifyAsync(split);
+                            var msg = await messages[0].Channel.SendMessageAsync(split);
+                            messages.Add(msg);
+                            
                         }
                         catch(Exception ex)
                         {
@@ -162,8 +164,7 @@ namespace Palantir_Rebirth.Features.Lobbies
                     {
                         try
                         {
-                            var msg = await messages[0].Channel.SendMessageAsync(split);
-                            messages.Add(msg);
+                            await messages[splitIndex].ModifyAsync(split);
                         }
                         catch (Exception ex)
                         {
