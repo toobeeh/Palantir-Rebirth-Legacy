@@ -117,7 +117,6 @@ namespace Palantir_Rebirth.Features.Lobbies
                 //else break;
                 next.RemoveAt(0);
             }
-            next.Reverse();
 
             thread.Start();
             Active = true;
@@ -146,36 +145,38 @@ namespace Palantir_Rebirth.Features.Lobbies
                     message = message[(firstSplit + 1)..];
                 }
                 splits.Add(message);
+                if(messages.Count > splits.Count) splits.InsertRange(0, Enumerable.Repeat("", messages.Count - splits.Count));
 
                 int splitIndex = 0;
                 foreach(var split in splits)
                 {
+                    string msg = split.Replace(" ", "");
                     if (messages.Count - 1 < splitIndex)
                     {
                         try
                         {
-                            var msg = await messages[0].Channel.SendMessageAsync(split.Replace(" ", ""));
+                            var msg = await messages[0].Channel.SendMessageAsync(msg);
                             messages.Add(msg);
                             
                         }
                         catch(Exception ex)
                         {
-                            Logger.Error("Could not modify lobby message", ex);
+                            Logger.Error("Could not add new lobby message", ex);
                         }
                     }
                     else
                     {
                         try
                         {
-                            if(messages[splitIndex].Content != split.Replace(" ", ""))
+                            if(messages[splitIndex].Content != msg)
                             {
-                                var newmsg = await messages[splitIndex].ModifyAsync(split.Replace(" ", ""));
+                                var newmsg = await messages[splitIndex].ModifyAsync(msg);
                                 messages[splitIndex] = newmsg;
                             }
                         }
                         catch (Exception ex)
                         {
-                            Logger.Error("Could not add new lobby message", ex);
+                            Logger.Error("Could not modify lobby message", ex);
                         }
                     }
 
@@ -183,13 +184,13 @@ namespace Palantir_Rebirth.Features.Lobbies
                 }
 
                 // clear remaining messages
-                for(int i = splitIndex + 1; i < messages.Count; i++){
-                    if(messages[i].Content != "_ _")
-                    {
-                        var newmsg = await messages[i].ModifyAsync("_ _");
-                        messages[i] = newmsg;
-                    }
-                }
+                //for(int i = splitIndex + 1; i < messages.Count; i++){
+                //    if(messages[i].Content != "_ _")
+                //    {
+                //        var newmsg = await messages[i].ModifyAsync("_ _");
+                //        messages[i] = newmsg;
+                //    }
+                //}
 
                 await Task.Delay(10000);
             }
