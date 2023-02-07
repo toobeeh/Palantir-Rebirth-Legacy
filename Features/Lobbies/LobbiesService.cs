@@ -145,7 +145,7 @@ namespace Palantir_Rebirth.Features.Lobbies
                     message = message[(firstSplit + 1)..];
                 }
                 splits.Add(message);
-                if(messages.Count > splits.Count) splits.InsertRange(0, Enumerable.Repeat("", messages.Count - splits.Count));
+                if(messages.Count > splits.Count) splits.InsertRange(0, Enumerable.Repeat("_ _", messages.Count - splits.Count));
 
                 int splitIndex = 0;
                 foreach(var split in splits)
