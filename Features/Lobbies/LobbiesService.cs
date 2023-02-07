@@ -150,12 +150,12 @@ namespace Palantir_Rebirth.Features.Lobbies
                 int splitIndex = 0;
                 foreach(var split in splits)
                 {
-                    string msg = split.Replace(" ", "");
+                    string content = split.Replace(" ", "");
                     if (messages.Count - 1 < splitIndex)
                     {
                         try
                         {
-                            var msg = await messages[0].Channel.SendMessageAsync(msg);
+                            var msg = await messages[0].Channel.SendMessageAsync(content);
                             messages.Add(msg);
                             
                         }
@@ -168,9 +168,9 @@ namespace Palantir_Rebirth.Features.Lobbies
                     {
                         try
                         {
-                            if(messages[splitIndex].Content != msg)
+                            if(messages[splitIndex].Content != content)
                             {
-                                var newmsg = await messages[splitIndex].ModifyAsync(msg);
+                                var newmsg = await messages[splitIndex].ModifyAsync(content);
                                 messages[splitIndex] = newmsg;
                             }
                         }
