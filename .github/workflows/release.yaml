@@ -13,8 +13,11 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         script: |
-            sudo service palantir-nightly stop
+            #sudo service palantir-nightly stop
             cd /home/pi/Palantir-Rebirth
             sudo git pull
             sudo dotnet build
-            sudo service palantir-nightly start
+            #sudo service palantir-nightly start
+            tmux send-keys -t palantir-nightly.0 "C-c" Enter
+            tmux send-keys -t palantir-nightly.0 "cd \ /home/pi/Palantir-Rebirth/" Enter
+            tmux send-keys -t palantir-nightly.0 "sudo \ dotnet bin/Debug/net7.0/Palantir-Rebirth.dll \ /home/pi/Palantir-Rebirth/config.json" Enter
