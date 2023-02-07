@@ -108,6 +108,8 @@ namespace Palantir_Rebirth.Features.Lobbies
 
             // get other messages
             var next = new List<DiscordMessage>(await messages[0].Channel.GetMessagesAfterAsync(messages[0].Id, 10));
+            next.Reverse();
+
             while (next.Count > 0)
             {
                 var current = next[0];
@@ -115,6 +117,7 @@ namespace Palantir_Rebirth.Features.Lobbies
                 //else break;
                 next.RemoveAt(0);
             }
+            next.Reverse();
 
             thread.Start();
             Active = true;
