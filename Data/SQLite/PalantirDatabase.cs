@@ -19,10 +19,15 @@ namespace Palantir_Rebirth.Data.SQLite
             return new PalantirDatabaseContext(this.path);
         }
 
-        public async Task Close(PalantirDatabaseContext context, bool save = false)
+        public async Task CloseAsync(PalantirDatabaseContext context, bool save = false)
         {
             if (save) await context.SaveChangesAsync();
             await context.DisposeAsync();
+        }
+        public void Close(PalantirDatabaseContext context, bool save = false)
+        {
+            if (save) context.SaveChanges();
+            context.Dispose();
         }
 
         public async Task<List<TResult>> QueryAsync<TResult>(Func<PalantirDatabaseContext, IEnumerable<TResult>> query, bool save = false)
@@ -31,13 +36,13 @@ namespace Palantir_Rebirth.Data.SQLite
             try
             {
                 var result = query.Invoke(context).ToList();
-                await Close(context, save);
+                await CloseAsync(context, save);
                 return result;
             }
             catch (Exception e)
             {
                 Logger.Error("Failed to execute async db query", e);
-                await Close(context, save);
+                await CloseAsync(context, save);
                 return new List<TResult>();
             }
         }
@@ -48,13 +53,13 @@ namespace Palantir_Rebirth.Data.SQLite
             try
             {
                 var result = query.Invoke(context).ToList();
-                Close(context, save).GetAwaiter().GetResult();
+                Close(context, save);
                 return result;
             }
             catch(Exception e)
             {
                 Logger.Error("Failed to execute sync db query", e);
-                Close(context, save).GetAwaiter().GetResult();
+                Close(context, save);
                 return new List<TResult>();
             }
         }

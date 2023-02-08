@@ -182,16 +182,6 @@ namespace Palantir_Rebirth.Features.Lobbies
 
                     splitIndex++;
                 }
-
-                // clear remaining messages
-                //for(int i = splitIndex + 1; i < messages.Count; i++){
-                //    if(messages[i].Content != "_ _")
-                //    {
-                //        var newmsg = await messages[i].ModifyAsync("_ _");
-                //        messages[i] = newmsg;
-                //    }
-                //}
-
                 await Task.Delay(10000);
             }
         }
