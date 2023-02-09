@@ -12,7 +12,7 @@ namespace Palantir_Rebirth.Features.User
 {
     internal class PalantirMember
     {
-        private readonly ItemCache<MemberEntity> memberCache;
+        private readonly DatabaseCache<MemberEntity> memberCache;
         private readonly DependencyCache<Member, string> discordMemberCache;
         private readonly DependencyCache<PermissionFlag, int> flagsCache;
 

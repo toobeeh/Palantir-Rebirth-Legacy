@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Palantir_Rebirth.Data.Cache
 {
-    internal class ItemCache<TItem>
+    internal class DatabaseCache<TItem>
     {
         private Func<PalantirDatabaseContext, TItem> bindingRead;
         private Action<PalantirDatabaseContext, TItem> bindingWrite;
@@ -16,7 +16,7 @@ namespace Palantir_Rebirth.Data.Cache
         private readonly int expiry;
         private TItem? item;
 
-        public ItemCache(Func<PalantirDatabaseContext, TItem> bindingRead, Action<PalantirDatabaseContext, TItem> bindingWrite, int expiry = 60 * 1000)
+        public DatabaseCache(Func<PalantirDatabaseContext, TItem> bindingRead, Action<PalantirDatabaseContext, TItem> bindingWrite, int expiry = 60 * 1000)
         {
             lastUpdate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             this.expiry = expiry;
@@ -41,6 +41,9 @@ namespace Palantir_Rebirth.Data.Cache
                     lastUpdate = now;
                     OnRead(item);
                 }
+                else
+                    Console.WriteLine("Read from cache; expires in " + (expiry - (now - lastUpdate)));
+
                 return item;
             } 
 
