@@ -14,7 +14,7 @@ namespace Palantir_Rebirth.Data.Cache
 
         private long lastUpdate;
         private readonly int expiry;
-        private TItem item;
+        private TItem? item;
 
         public ItemCache(Func<PalantirDatabaseContext, TItem> bindingRead, Action<PalantirDatabaseContext, TItem> bindingWrite, int expiry = 60 * 1000)
         {
@@ -32,7 +32,7 @@ namespace Palantir_Rebirth.Data.Cache
             get
             {
                 long now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-                if (now - lastUpdate > expiry)
+                if (now - lastUpdate > expiry || item is null)
                 {
                     var db = Program.PalantirDb.Open();
                     item = bindingRead.Invoke(db);
