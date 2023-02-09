@@ -33,8 +33,8 @@ namespace Palantir_Rebirth.Features.User
             // init cache to db
             memberCache = new(
                 (db) => db.Members.First(m => m.Login == Token),
-                (db, value) => db.Members.Update(value),
-                30 * 60 * 1000
+                (db, value) => db.Members.Update(value)//,
+                //30 * 60 * 1000
             );
 
             // init dependency to cached db entity

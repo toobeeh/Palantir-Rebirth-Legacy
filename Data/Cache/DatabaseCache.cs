@@ -41,8 +41,6 @@ namespace Palantir_Rebirth.Data.Cache
                     lastUpdate = now;
                     OnRead(item);
                 }
-                else
-                    Console.WriteLine("Read from cache; expires in " + (expiry - (now - lastUpdate)));
 
                 return item;
             } 
