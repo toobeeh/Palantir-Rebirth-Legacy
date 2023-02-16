@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Palantir_Rebirth.Commands.Slash;
+using DSharpPlus.Entities;
 
 namespace Palantir_Rebirth.Features.Client
 {
@@ -41,6 +42,11 @@ namespace Palantir_Rebirth.Features.Client
 
             var slash = client.UseSlashCommands();
             slash.RegisterCommands<SpriteSlashCommands>(779435254225698827);
+
+            slash.SlashCommandErrored += async (s, e) =>
+            {
+                await e.Context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().WithContent($"Errored with <@{e.Exception.ToString()}> "));
+            };
 
             Interactivity = client.UseInteractivity();
         }
