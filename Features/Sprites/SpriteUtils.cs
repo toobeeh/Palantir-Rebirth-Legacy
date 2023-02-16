@@ -21,14 +21,20 @@ namespace Palantir_Rebirth.Features.Sprites
             return matches[0];
         }
 
+        public static List<SpritesEntity> GetSprites() {
+            return Program.PalantirDb.Query(db => db.Sprites);
+        }
+
         public static List<SpriteProperty> ParseInventory(string inv)
         {
             List<SpriteProperty> sprites = new();
+            var available = GetSprites();
             var entries = inv.Split(',');
             foreach(var entry in entries)
             {
                 int slot = entry.Count(c => c == '.');
-                var sprite = GetSprite(Convert.ToInt32(entry.Replace(".", "")));
+                var sprite =available.FirstOrDefault(a => a.ID == Convert.ToInt32(entry.Replace(".", "")));
+                if (sprite is null) continue;
                 var sp = new SpriteProperty(sprite, slot);
                 sprites.Add(sp);
             }
