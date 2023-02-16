@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Commands\Prefix\" />
+    <Folder Include="Features\Scenes\Exceptions\" />
   </ItemGroup>
 
 </Project>

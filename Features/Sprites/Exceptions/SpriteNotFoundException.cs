@@ -10,7 +10,7 @@ namespace Palantir_Rebirth.Features.Sprites.Exceptions
 {
     internal class SpriteNotFoundException : SpriteException
     {
-        public SpriteNotFoundException(int spriteId) : base(spriteId)
+        public SpriteNotFoundException(int spriteId) : base(spriteId, "")
         {
         }
     }
