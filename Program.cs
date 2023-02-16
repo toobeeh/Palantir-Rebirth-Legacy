@@ -14,10 +14,12 @@ namespace Palantir_Rebirth
     {
         public static PalantirBot Palantir;
         public static PalantirDatabase PalantirDb;
+        public static bool Nightly { get; private set; }
 
         static async Task Main(string[] args)
         {
             var config = JSONUtils.FromFile<BotConfig>(args[0]);
+            Nightly = config.Nightly;
             //while (config.Nightly && !Debugger.IsAttached)
             //{
             //    Thread.Sleep(1000);

@@ -24,13 +24,12 @@ namespace Palantir_Rebirth.Data.Cache
             this.bindingWrite = bindingWrite;
             lastUpdate = 0;
         }
-        public Action<TItem> OnRead { private get; set; } = delegate { };
-        public Action<TItem> OnUpdate { private get; set; } = delegate { };
 
         public TItem Item 
         { 
             get
             {
+                // check if cache has expired and fetch new
                 long now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
                 if (now - lastUpdate > expiry || item is null)
                 {
@@ -39,7 +38,6 @@ namespace Palantir_Rebirth.Data.Cache
                     Program.PalantirDb.Close(db);
 
                     lastUpdate = now;
-                    OnRead(item);
                 }
 
                 return item;
@@ -47,12 +45,12 @@ namespace Palantir_Rebirth.Data.Cache
 
             set
             {
+                // write to db and mark current as dirty
                 var db = Program.PalantirDb.Open();
                 bindingWrite.Invoke(db, value);
                 Console.WriteLine("no changes in debug mode");
                 Program.PalantirDb.Close(db, false);
                 MarkDirty();
-                OnUpdate(value);
             }
         } 
 

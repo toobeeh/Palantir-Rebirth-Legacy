@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Palantir_Rebirth.Commands.Slash;
 
 namespace Palantir_Rebirth.Features.Client
 {
@@ -39,6 +40,7 @@ namespace Palantir_Rebirth.Features.Client
             });
 
             var slash = client.UseSlashCommands();
+            slash.RegisterCommands<SpriteSlashCommands>(779435254225698827);
 
             Interactivity = client.UseInteractivity();
         }
