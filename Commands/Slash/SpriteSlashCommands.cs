@@ -16,7 +16,7 @@ namespace Palantir_Rebirth.Commands.Slash
     internal class SpriteSlashCommands : ApplicationCommandModule
     {
         [SlashCommand("buy", "Buy a sprite")]
-        //[SlashRequirePermissionFlag(PermissionFlag.ADMIN)]
+        [SlashRequirePermissionFlag(PermissionFlag.ADMIN)]
         public async Task BuySprite(InteractionContext context, [Option("ID", "The sprite ID - find all sprites on https://typo.rip")] long spriteId)
         {
             var member = PalantirMemberFactory.ByDiscordID(context.Member.Id);

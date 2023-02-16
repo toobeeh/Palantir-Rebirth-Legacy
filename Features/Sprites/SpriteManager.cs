@@ -30,7 +30,7 @@ namespace Palantir_Rebirth.Features.Sprites
             }
             else
             {
-                if (member.GetCredit() < sprite.Cost) throw new MemberSpriteException(member, sprite, MemberSpriteException.CREDIT_TOO_LOW);
+                if (!member.Flags.BotAdmin &&  member.GetCredit() < sprite.Cost) throw new MemberSpriteException(member, sprite, MemberSpriteException.CREDIT_TOO_LOW);
             }
             
             SpriteUtils.AddSpriteToInv(sprite, member);
