@@ -45,12 +45,19 @@ namespace Palantir_Rebirth.Commands.Slash
                    $"_ _",
                    spriteProp);
             }
-            else
+            else if(spriteProp is null && slot > 0)
             {
                 await context.SendSpriteEmbed(
                    $"OK then",
                    $"Your sprite on slot {slot} has been disabled.",
                    null);
+            }
+            else if(spriteProp is not null && slot == 0)
+            {
+                await context.SendSpriteEmbed(
+                   $"OK then",
+                   $"Your sprite {spriteProp.Name} has been disabled.",
+                   spriteProp);
             }
         }
 
