@@ -29,7 +29,7 @@ namespace Palantir_Rebirth.Features.Client
             {
                 Token = token,
                 TokenType = TokenType.Bot,
-                MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug
+                MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Information
             });
 
             var commands = client.UseCommandsNext(new CommandsNextConfiguration
