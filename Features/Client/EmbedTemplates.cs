@@ -17,18 +17,18 @@ namespace Palantir_Rebirth.Features.Client
         private static DiscordEmbedBuilder WithCommandFooter(this DiscordEmbedBuilder builder, InteractionContext ctx)
         {
             string args = ctx.Interaction.Data.Options.ToList().ConvertAll(a => $"{a.Name}={a.Value}").ToDelimitedString("  ");
-            string command = $"/{ctx.CommandName}   " + args;
+            string command = $"/{ctx.CommandName}  " + args;
 
             return builder.WithFooter(command, "https://cdn.discordapp.com/attachments/857205187445522442/1076159776532217866/32CircleFit.png");
         } 
 
-        public static async Task SendSpriteEmbed(this InteractionContext ctx, string title, string message, SpritesEntity sprite)
+        public static async Task SendSpriteEmbed(this InteractionContext ctx, string title, string message, SpritesEntity? sprite)
         {
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
                 .WithTitle(title)
                 .WithDescription(message)
                 .WithColor(DiscordColor.Magenta)
-                .WithImageUrl(sprite.URL)
+                .WithImageUrl(sprite is not null ? sprite.URL : "")
                 .WithCommandFooter(ctx);
 
             await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(embed));

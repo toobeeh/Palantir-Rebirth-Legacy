@@ -93,6 +93,17 @@ namespace Palantir_Rebirth.Features.User
             return credit;
         }
 
+        public int GetSlotCount()
+        {
+            int slots = 1;
+            if (Flags.Patron) slots++;
+            if (Flags.BotAdmin) slots += 1000;
+
+            double drops = RegularDrops + GetLeagueDrops().worth;
+            slots += Convert.ToInt32(Math.Floor(drops/1000));
+            return slots;
+        }
+
         public void MarkDirty()
         {
             memberCache.MarkDirty();

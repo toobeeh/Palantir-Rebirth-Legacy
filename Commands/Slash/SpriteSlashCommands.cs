@@ -11,6 +11,7 @@ using Palantir_Rebirth.Data.SQLite;
 using Palantir_Rebirth.Features.User;
 using Palantir_Rebirth.Commands.Slash.ExecutionChecks;
 using Palantir_Rebirth.Features.Client;
+using Palantir_Rebirth.Features.Sprites;
 
 namespace Palantir_Rebirth.Commands.Slash
 {
@@ -26,9 +27,37 @@ namespace Palantir_Rebirth.Commands.Slash
             await context.SendSpriteEmbed(
                 "Whee!",
                 $"You unlocked **{sprite.Name}**!\nActivate it with {
-                    Program.Palantir.GetSlashCommandMention("buy", context.Interaction.GuildId)
+                    Program.Palantir.GetSlashCommandMention("use", context.Interaction.GuildId)
                     } `{sprite.ID}`",
                 sprite);
+        }
+
+        [SlashCommand("use", "Use a sprite on your avatar on skribbl")]
+        public async Task UseSprite(InteractionContext context, [Option("ID", "The sprite ID - find all sprites on https://typo.rip")] long sprite, [Option("Slot", "The sprite slot")] long slot = 1)
+        {
+            var member = PalantirMemberFactory.ByDiscordID(context.Member.Id);
+            var spriteProp = member.SpriteManager.UseSprite(Convert.ToInt32(sprite), Convert.ToInt32(slot));
+
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
+            embed.Title = "Your fancy sprite on slot " + slot + " was set to **`" + spriteProp.Name + "`**";
+            embed.ImageUrl = spriteProp.URL;
+            embed.Color = DiscordColor.Magenta;
+            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(embed));
+
+            if(slot > 0 && spriteProp is not null)
+            {
+                await context.SendSpriteEmbed(
+                   $"Your fancy sprite on slot {slot} was set to **`{spriteProp.Name}`**",
+                   $"_ _",
+                   spriteProp);
+            }
+            else
+            {
+                await context.SendSpriteEmbed(
+                   $"Your sprite on slot {slot} has been disabled.",
+                   $"_ _",
+                   null);
+            }
         }
 
     }

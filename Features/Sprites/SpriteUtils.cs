@@ -42,14 +42,18 @@ namespace Palantir_Rebirth.Features.Sprites
             return sprites;
         }
 
-        public static void AddSpriteToInv(SpritesEntity spt, PalantirMember member)
+        public static string InventoryToString(List<SpriteProperty> sprites)
         {
-            string id = spt.ID.ToString();
+            return sprites.ConvertAll(s => ".".Repeat(s.Slot) + s.Slot.ToString()).ToDelimitedString(",");
+        }
+
+        public static void WriteSpriteInventory(string inv, PalantirMember member)
+        {
             string login = member.Token;
 
             var db = Program.PalantirDb.Open();
             var mem = db.Members.FirstOrDefault(m => m.Login == login);
-            mem.Sprites += "," + id;
+            mem.Sprites = inv;
             Program.PalantirDb.Close(db, true);
         }
 
