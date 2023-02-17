@@ -18,6 +18,7 @@ namespace Palantir_Rebirth.Features.Client
     {
         private DiscordClient client;
         private readonly bool nightly;
+        private SlashCommandsExtension slash;
         public InteractivityExtension Interactivity { private set; get; }
 
         public PalantirBot(string tokenPath, bool nightly)
@@ -40,7 +41,7 @@ namespace Palantir_Rebirth.Features.Client
                 CaseSensitive = false
             });
 
-            var slash = client.UseSlashCommands();
+            slash = client.UseSlashCommands();
             slash.RegisterCommands<SpriteSlashCommands>(779435254225698827);
 
             slash.SlashCommandErrored += async (s, e) =>
@@ -59,6 +60,21 @@ namespace Palantir_Rebirth.Features.Client
         public async Task SendDebugMessage(string message)
         {
             await (await client.GetChannelAsync(1071167977946353745)).SendMessageAsync(message);
+        }
+
+        public string GetSlashCommandMention(string name, ulong? guildId)
+        {
+            var guild = slash.RegisteredCommands.FirstOrDefault(g => g.Key == guildId);
+            if(guild.Key is null) guild = slash.RegisteredCommands.FirstOrDefault(g => g.Key == null);
+            if (guild.Key is not null)
+            {
+                var command = guild.Value.FirstOrDefault(c => c.Name == name);
+                if(command is not null)
+                {
+                    return $"</{command.Id}:{command.Name}>";
+                }
+            }
+            return "/" + name;
         }
 
         public async Task LoadGuilds()

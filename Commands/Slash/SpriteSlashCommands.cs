@@ -25,7 +25,9 @@ namespace Palantir_Rebirth.Commands.Slash
 
             await context.SendSpriteEmbed(
                 "Whee!",
-                "You unlocked **" + sprite.Name + "**!\nActivate it with `>use " + sprite.ID + "`",
+                $"You unlocked **{sprite.Name}**!\nActivate it with {
+                    Program.Palantir.GetSlashCommandMention("buy", context.Interaction.GuildId)
+                    } `{sprite.ID}`",
                 sprite);
         }
 
