@@ -38,12 +38,6 @@ namespace Palantir_Rebirth.Commands.Slash
             var member = PalantirMemberFactory.ByDiscordID(context.Member.Id);
             var spriteProp = member.SpriteManager.UseSprite(Convert.ToInt32(sprite), Convert.ToInt32(slot));
 
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
-            embed.Title = "Your fancy sprite on slot " + slot + " was set to **`" + spriteProp.Name + "`**";
-            embed.ImageUrl = spriteProp.URL;
-            embed.Color = DiscordColor.Magenta;
-            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(embed));
-
             if(slot > 0 && spriteProp is not null)
             {
                 await context.SendSpriteEmbed(
