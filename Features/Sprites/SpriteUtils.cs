@@ -33,7 +33,7 @@ namespace Palantir_Rebirth.Features.Sprites
             foreach(var entry in entries)
             {
                 int slot = entry.Count(c => c == '.');
-                var sprite =available.FirstOrDefault(a => a.ID == Convert.ToInt32(entry.Replace(".", "")));
+                var sprite = available.FirstOrDefault(a => a.ID == Convert.ToInt32(entry.Replace(".", "")));
                 if (sprite is null) continue;
                 var sp = new SpriteProperty(sprite, slot);
                 sprites.Add(sp);
@@ -44,7 +44,7 @@ namespace Palantir_Rebirth.Features.Sprites
 
         public static string InventoryToString(List<SpriteProperty> sprites)
         {
-            return sprites.ConvertAll(s => ".".Repeat(s.Slot) + s.Slot.ToString()).ToDelimitedString(",");
+            return sprites.ConvertAll(s => new string('.', s.Slot) + s.ID).ToDelimitedString(",");
         }
 
         public static void WriteSpriteInventory(string inv, PalantirMember member)

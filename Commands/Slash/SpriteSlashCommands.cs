@@ -48,8 +48,8 @@ namespace Palantir_Rebirth.Commands.Slash
             else
             {
                 await context.SendSpriteEmbed(
+                   $"OK then",
                    $"Your sprite on slot {slot} has been disabled.",
-                   $"_ _",
                    null);
             }
         }
