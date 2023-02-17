@@ -16,8 +16,8 @@ namespace Palantir_Rebirth.Features.Client
     {
         private static DiscordEmbedBuilder WithCommandFooter(this DiscordEmbedBuilder builder, InteractionContext ctx)
         {
-            string args = ctx.Interaction.Data.Options.ToList().ConvertAll(a => $"{a.Name}:{a.Value}").ToDelimitedString("  ");
-            string command = $"/{ctx.CommandName} " + args;
+            string args = ctx.Interaction.Data.Options.ToList().ConvertAll(a => $"{a.Name}={a.Value}").ToDelimitedString("  ");
+            string command = $"/{ctx.CommandName}   " + args;
 
             return builder.WithFooter(command, "https://cdn.discordapp.com/attachments/857205187445522442/1076159776532217866/32CircleFit.png");
         } 

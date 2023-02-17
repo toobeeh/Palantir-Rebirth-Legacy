@@ -71,7 +71,7 @@ namespace Palantir_Rebirth.Features.Client
                 var command = guild.Value.FirstOrDefault(c => c.Name == name);
                 if(command is not null)
                 {
-                    return $"</{command.Id}:{command.Name}>";
+                    return $"</{command.Name}:{command.Id}>";
                 }
             }
             return "/" + name;
